@@ -1,4 +1,4 @@
-# deep-reach
+# deepreach
 
 AI-powered cold outreach for job seekers. Find companies, discover contacts, and generate personalized emails -- all from the command line.
 
@@ -7,9 +7,9 @@ Built on [LangGraph DeepAgents](https://github.com/langchain-ai/langgraphjs) wit
 ## Quick Start
 
 ```bash
-npx deep-reach init       # one-time setup (profile, resume, API keys)
-npx deep-reach run        # find companies, contacts, and draft emails
-npx deep-reach send run0001   # send the emails
+npx deepreach init       # one-time setup (profile, resume, API keys)
+npx deepreach run        # find companies, contacts, and draft emails
+npx deepreach send run0001   # send the emails
 ```
 
 ## Setup
@@ -18,7 +18,7 @@ npx deep-reach send run0001   # send the emails
 
 ```bash
 mkdir my-outreach && cd my-outreach
-npx deep-reach init
+npx deepreach init
 ```
 
 The wizard walks you through everything:
@@ -27,7 +27,7 @@ The wizard walks you through everything:
 - Resume (PDF and optional Markdown)
 - API keys
 
-It creates a `.deep-reach/` directory with your config and a `.env` with your keys.
+It creates a `.deepreach/` directory with your config and a `.env` with your keys.
 
 ### 2. Get your API keys
 
@@ -51,57 +51,57 @@ Only needed if you want to send emails with `--send` or the `send` command.
 The wizard will prompt for `GMAIL_USER` and `GMAIL_APP_PASSWORD`. If you skip them during init, you can add them later:
 
 ```bash
-npx deep-reach edit env
+npx deepreach edit env
 ```
 
 ## Commands
 
-### `deep-reach init`
+### `deepreach init`
 
 Interactive setup wizard. Creates your workspace in the current directory.
 
 ```bash
-npx deep-reach init
+npx deepreach init
 ```
 
-### `deep-reach run`
+### `deepreach run`
 
 Run the outreach pipeline. Finds companies, discovers contacts, drafts personalized emails.
 
 ```bash
-npx deep-reach run                                    # use defaults
-npx deep-reach run --prompt "Focus on AI startups"    # steer the search
-npx deep-reach run --dry-run                          # validate only, don't run
-npx deep-reach run --send                             # auto-send after drafting
-npx deep-reach run --yes                              # skip confirmation
-npx deep-reach run --verbose                          # detailed logging
-npx deep-reach run --profile ./other-profile          # use a different profile dir
-npx deep-reach run --dir ~/other-workspace            # use a different workspace
+npx deepreach run                                    # use defaults
+npx deepreach run --prompt "Focus on AI startups"    # steer the search
+npx deepreach run --dry-run                          # validate only, don't run
+npx deepreach run --send                             # auto-send after drafting
+npx deepreach run --yes                              # skip confirmation
+npx deepreach run --verbose                          # detailed logging
+npx deepreach run --profile ./other-profile          # use a different profile dir
+npx deepreach run --dir ~/other-workspace            # use a different workspace
 ```
 
-### `deep-reach send <run-id>`
+### `deepreach send <run-id>`
 
 Send emails from a previous run's drafts.
 
 ```bash
-npx deep-reach send run0001           # review recipients, then send
-npx deep-reach send run0001 --yes     # skip confirmation
+npx deepreach send run0001           # review recipients, then send
+npx deepreach send run0001 --yes     # skip confirmation
 ```
 
-### `deep-reach edit <target>`
+### `deepreach edit <target>`
 
 Open a config file for editing. Opens with your OS default application.
 
 ```bash
-npx deep-reach edit profile       # edit name, email, links
-npx deep-reach edit preferences   # edit roles, industries, tone, limits
-npx deep-reach edit resume        # open resume folder (drag-drop PDF, edit markdown)
-npx deep-reach edit env           # edit API keys
+npx deepreach edit profile       # edit name, email, links
+npx deepreach edit preferences   # edit roles, industries, tone, limits
+npx deepreach edit resume        # open resume folder (drag-drop PDF, edit markdown)
+npx deepreach edit env           # edit API keys
 ```
 
 ## Editing Your Config
 
-All your config lives in `.deep-reach/` inside your workspace. You can edit these files however you like -- through `deep-reach edit`, or by opening them directly in any editor.
+All your config lives in `.deepreach/` inside your workspace. You can edit these files however you like -- through `deepreach edit`, or by opening them directly in any editor.
 
 **profile.json** -- who you are:
 ```json
@@ -133,11 +133,11 @@ Valid tones: `"professional"`, `"casual"`, `"enthusiastic"`.
 - `resume.pdf` -- attached to outgoing emails
 - `resume.md` -- read by the AI to personalize email drafts (optional but recommended)
 
-If you update your resume, just replace the files in `.deep-reach/resume/`.
+If you update your resume, just replace the files in `.deepreach/resume/`.
 
 ## How It Works
 
-When you run `deep-reach run`, the AI pipeline:
+When you run `deepreach run`, the AI pipeline:
 
 1. **Checks history** -- reads `storage/contacted.json` to avoid companies you've already emailed
 2. **Finds companies** -- searches the web for companies matching your preferences
@@ -150,13 +150,13 @@ When you run `deep-reach run`, the AI pipeline:
 5. **Saves everything** -- drafts go to `runs/<run-id>/drafts.json`
 6. **Updates history** -- adds successful companies to `storage/contacted.json`
 
-You review the drafts, then send with `deep-reach send <run-id>`.
+You review the drafts, then send with `deepreach send <run-id>`.
 
 ## Workspace Structure
 
 ```
 my-outreach/
-├── .deep-reach/              # your config (created by init)
+├── .deepreach/              # your config (created by init)
 │   ├── profile.json          # identity
 │   ├── preferences.json      # run defaults
 │   └── resume/
@@ -177,7 +177,7 @@ my-outreach/
 
 ## Workspace Discovery
 
-You can run `deep-reach` from anywhere inside your workspace directory tree. The tool walks up from your current directory looking for `.deep-reach/`, similar to how `git` finds `.git/`.
+You can run `deepreach` from anywhere inside your workspace directory tree. The tool walks up from your current directory looking for `.deepreach/`, similar to how `git` finds `.git/`.
 
 ```bash
 cd ~/my-outreach                    # works
@@ -188,7 +188,7 @@ cd ~/my-outreach/storage            # also works
 To use a specific workspace from anywhere:
 
 ```bash
-npx deep-reach run --dir ~/my-outreach
+npx deepreach run --dir ~/my-outreach
 ```
 
 ## Requirements

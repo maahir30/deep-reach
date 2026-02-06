@@ -297,7 +297,7 @@ export async function runPipeline(
       GitHub: ${profile.githubUrl || "N/A"}
       Portfolio: ${profile.portfolioUrl || "N/A"}
       Interests: ${profile.interests?.join(", ") || "N/A"}
-      Resume: ${projectRoot}/.deep-reach/resume/resume.md (read this for detailed education, skills, and experience)
+      Resume: ${projectRoot}/.deepreach/resume/resume.md (read this for detailed education, skills, and experience)
 
       DEFAULT PREFERENCES (use these as fallbacks):
       Target Roles: ${profile.defaultRoles.join(", ")}

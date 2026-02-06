@@ -1,7 +1,7 @@
 /**
- * deep-reach init -- interactive setup wizard
+ * deepreach init -- interactive setup wizard
  *
- * Creates a `.deep-reach/` workspace in the current directory with:
+ * Creates a `.deepreach/` workspace in the current directory with:
  *   - profile.json   (identity)
  *   - preferences.json (run defaults)
  *   - resume/resume.pdf  (copied from user-provided path)
@@ -28,7 +28,7 @@ export async function runInit() {
   const root = process.cwd();
   const wsDir = configDir(root);
 
-  clack.intro("deep-reach setup");
+  clack.intro("deepreach setup");
 
   // Warn if workspace already exists
   if (existsSync(wsDir)) {
@@ -317,7 +317,7 @@ export async function runInit() {
     "Created"
   );
 
-  clack.outro("Run your first outreach:  npx deep-reach run");
+  clack.outro("Run your first outreach:  npx deepreach run");
 }
 
 // ============================================================================

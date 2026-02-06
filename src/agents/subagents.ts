@@ -20,7 +20,7 @@ Extract key details for finding commonalities:
 - LinkedIn/GitHub URLs (if available)
 
 For detailed background (education, skills, experience):
-- Read the resume at <workspace>/../../.deep-reach/resume/resume.md
+- Read the resume at <workspace>/../../.deepreach/resume/resume.md
 - Use this to find deeper connections (same school, tech stack, research areas, etc.)
 
 STEP 1 - PERSON RESEARCH (REQUIRED - DO NOT SKIP):

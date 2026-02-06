@@ -1,10 +1,30 @@
 {
-  "name": "deep-reach",
+  "name": "deepreach",
   "version": "0.1.0",
+  "description": "AI-powered cold outreach for job seekers. Find companies, discover contacts, and generate personalized emails from the command line.",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maahir30/deep-reach.git"
+  },
+  "homepage": "https://github.com/maahir30/deep-reach#readme",
+  "bugs": {
+    "url": "https://github.com/maahir30/deep-reach/issues"
+  },
+  "keywords": [
+    "cli",
+    "recruiting",
+    "cold-email",
+    "outreach",
+    "job-search",
+    "ai",
+    "langchain",
+    "langgraph"
+  ],
   "main": "./dist/index.js",
   "bin": {
-    "deep-reach": "./dist/index.js"
+    "deepreach": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -16,7 +36,7 @@
     "build": "tsup",
     "postbuild": "chmod +x dist/index.js",
     "prepublishOnly": "npm run build",
-    "dev": "node --import tsx src/cli/index.ts run --profile .deep-reach",
+    "dev": "node --import tsx src/cli/index.ts run --profile .deepreach",
     "send": "node --import tsx src/cli/index.ts send",
     "clean": "rm -rf node_modules dist .langgraph_data runs"
   },

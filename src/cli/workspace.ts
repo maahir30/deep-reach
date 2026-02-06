@@ -1,9 +1,9 @@
 /**
- * Workspace root discovery for deep-reach CLI.
+ * Workspace root discovery for deepreach CLI.
  *
- * Walks up from cwd (or a given start directory) looking for a `.deep-reach/`
+ * Walks up from cwd (or a given start directory) looking for a `.deepreach/`
  * folder, similar to how git discovers `.git/`.  The directory containing
- * `.deep-reach/` is the "workspace root" and all run/storage paths resolve
+ * `.deepreach/` is the "workspace root" and all run/storage paths resolve
  * relative to it.
  */
 
@@ -14,7 +14,7 @@ import { join, dirname } from "path";
 // Constants
 // ============================================================================
 
-export const WORKSPACE_DIR_NAME = ".deep-reach";
+export const WORKSPACE_DIR_NAME = ".deepreach";
 
 // ============================================================================
 // Workspace root discovery
@@ -22,8 +22,8 @@ export const WORKSPACE_DIR_NAME = ".deep-reach";
 
 /**
  * Walk up the directory tree from `from` until we find a directory that
- * contains `.deep-reach/`.  Returns the workspace root (the *parent* of
- * `.deep-reach/`) or `null` if we hit the filesystem root without finding one.
+ * contains `.deepreach/`.  Returns the workspace root (the *parent* of
+ * `.deepreach/`) or `null` if we hit the filesystem root without finding one.
  */
 export function findWorkspaceRoot(from: string = process.cwd()): string | null {
   let dir = from;
@@ -41,12 +41,12 @@ export function findWorkspaceRoot(from: string = process.cwd()): string | null {
 // Path helpers (all relative to workspace root)
 // ============================================================================
 
-/** Absolute path to the `.deep-reach/` config directory */
+/** Absolute path to the `.deepreach/` config directory */
 export function configDir(root: string): string {
   return join(root, WORKSPACE_DIR_NAME);
 }
 
-/** Absolute path to the profile directory inside `.deep-reach/` */
+/** Absolute path to the profile directory inside `.deepreach/` */
 export function profileDir(root: string): string {
   return join(root, WORKSPACE_DIR_NAME);
 }

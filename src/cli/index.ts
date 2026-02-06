@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * deep-reach CLI
+ * deepreach CLI
  *
  * Commands:
  *   init  - Interactive workspace setup
@@ -35,7 +35,7 @@ import { runEdit } from "./edit";
 const program = new Command();
 
 program
-  .name("deep-reach")
+  .name("deepreach")
   .description("AI-powered cold-email recruiting pipeline")
   .version("0.1.0");
 
@@ -83,7 +83,7 @@ program
   .description("Run the cold-email recruiting pipeline")
   .option(
     "--profile <path>",
-    "Path to profile directory (defaults to .deep-reach/ in workspace)"
+    "Path to profile directory (defaults to .deepreach/ in workspace)"
   )
   .option(
     "--dir <path>",
@@ -155,7 +155,7 @@ async function runColdEmailPipeline(options: RunOptions) {
 
   if (!root) {
     throw new Error(
-      "No deep-reach workspace found.\nRun `npx deep-reach init` to set one up, or use --dir to point to one."
+      "No deepreach workspace found.\nRun `npx deepreach init` to set one up, or use --dir to point to one."
     );
   }
 
@@ -163,7 +163,7 @@ async function runColdEmailPipeline(options: RunOptions) {
   const { config: loadEnv } = await import("dotenv");
   loadEnv({ path: join(root, ".env") });
 
-  clack.intro("deep-reach v0.1.0");
+  clack.intro("deepreach v0.1.0");
   log.info("Pipeline started", { 
     workspaceRoot: root,
     dryRun: options.dryRun, 
@@ -418,7 +418,7 @@ function throwValidationError(fileName: string, error: import("zod").ZodError): 
     return `  ${path}: ${issue.message}`;
   });
   throw new Error(
-    `Invalid ${fileName}:\n${lines.join("\n")}\n\nFix with: npx deep-reach edit ${fileName.replace(".json", "")}`
+    `Invalid ${fileName}:\n${lines.join("\n")}\n\nFix with: npx deepreach edit ${fileName.replace(".json", "")}`
   );
 }
 
@@ -473,7 +473,7 @@ function printSuccessSummary(
   if (!stats.draftsGenerated) {
     clack.outro("No drafts generated. Check companies.json for details.");
   } else {
-    clack.outro(`Review drafts at ${relDir}/drafts.json\n\n  When ready:  npx deep-reach send ${runId}`);
+    clack.outro(`Review drafts at ${relDir}/drafts.json\n\n  When ready:  npx deepreach send ${runId}`);
   }
 }
 
@@ -667,7 +667,7 @@ program
 
       if (!root) {
         clack.log.error(
-          "No deep-reach workspace found.\nRun `npx deep-reach init` to set one up, or use --dir to point to one."
+          "No deepreach workspace found.\nRun `npx deepreach init` to set one up, or use --dir to point to one."
         );
         process.exit(1);
       }
