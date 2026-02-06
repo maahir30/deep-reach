@@ -1,6 +1,6 @@
 {
   "name": "deepreach",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AI-powered cold outreach for job seekers. Find companies, discover contacts, and generate personalized emails from the command line.",
   "type": "module",
   "license": "MIT",
