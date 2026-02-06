@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# LangGraph data
+.langgraph_data/
+
+# Agent workspace
+workspace/
+
+# Environment
+.env
+
+.env
+.env.local
+.env.*.local
+
+# Bun
+bun.lockb
+
+# TypeScript
+*.tsbuildinfo
+
+# Run artifacts
+runs/
+me/
+storage/
