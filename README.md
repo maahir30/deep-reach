@@ -88,7 +88,7 @@ my-outreach/
 
 ## Requirements
 
-- Node.js >= 18
+- Node.js >= 22
 - API keys: an LLM provider (Anthropic, OpenAI, etc.), Hunter.io, Tavily
 - Gmail App Password (only for sending)
 
