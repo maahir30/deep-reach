@@ -188,7 +188,7 @@ export async function runInit() {
     [
       "You'll need API keys from these services:",
       "",
-      "  Anthropic  ->  https://console.anthropic.com/settings/keys",
+      "  LLM provider (pick one below)",
       "  Hunter.io  ->  https://hunter.io/api-keys",
       "  Tavily     ->  https://app.tavily.com/home",
       "",
@@ -197,12 +197,32 @@ export async function runInit() {
     "API Keys"
   );
 
-  const anthropicKey = await clack.text({
-    message: "ANTHROPIC_API_KEY",
-    placeholder: "sk-ant-...",
-    validate: (v) => (!v ? "Anthropic API key is required" : undefined),
+  const LLM_PROVIDERS = [
+    { value: "anthropic",        label: "Anthropic",        envVar: "ANTHROPIC_API_KEY",  placeholder: "sk-ant-...",        defaultModel: "anthropic:claude-sonnet-4-20250514", hint: "console.anthropic.com" },
+    { value: "openai",           label: "OpenAI",           envVar: "OPENAI_API_KEY",     placeholder: "sk-...",            defaultModel: "openai:gpt-4o",                      hint: "platform.openai.com" },
+    { value: "google-vertexai",  label: "Google AI",        envVar: "GOOGLE_API_KEY",     placeholder: "AI...",             defaultModel: "google-vertexai:gemini-2.0-flash",   hint: "aistudio.google.com" },
+    { value: "groq",             label: "Groq",             envVar: "GROQ_API_KEY",       placeholder: "gsk_...",           defaultModel: "groq:llama-3.3-70b-versatile",       hint: "console.groq.com" },
+    { value: "mistralai",        label: "Mistral",          envVar: "MISTRAL_API_KEY",    placeholder: "...",               defaultModel: "mistralai:mistral-large-latest",     hint: "console.mistral.ai" },
+  ] as const;
+
+  const llmProvider = await clack.select({
+    message: "Which LLM provider do you want to use?",
+    options: LLM_PROVIDERS.map((p) => ({
+      value: p.value,
+      label: p.label,
+      hint: p.hint,
+    })),
   });
-  if (clack.isCancel(anthropicKey)) return cancel();
+  if (clack.isCancel(llmProvider)) return cancel();
+
+  const provider = LLM_PROVIDERS.find((p) => p.value === llmProvider)!;
+
+  const llmApiKey = await clack.text({
+    message: provider.envVar,
+    placeholder: provider.placeholder,
+    validate: (v) => (!v ? `${provider.label} API key is required` : undefined),
+  });
+  if (clack.isCancel(llmApiKey)) return cancel();
 
   const hunterKey = await clack.text({
     message: "HUNTER_API_KEY",
@@ -286,7 +306,8 @@ export async function runInit() {
 
   // .env
   const envLines = [
-    `ANTHROPIC_API_KEY=${anthropicKey}`,
+    `CHAT_MODEL=${provider.defaultModel}`,
+    `${provider.envVar}=${llmApiKey}`,
     `HUNTER_API_KEY=${hunterKey}`,
     `TAVILY_API_KEY=${tavilyKey}`,
   ];
