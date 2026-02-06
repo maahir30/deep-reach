@@ -23,9 +23,7 @@
     "langgraph"
   ],
   "main": "./dist/index.js",
-  "bin": {
-    "deepreach": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "files": [
     "dist"
   ],
