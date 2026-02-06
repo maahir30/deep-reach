@@ -14,9 +14,9 @@ import { Command } from "commander";
 import { mkdir, readFile, writeFile, stat } from "fs/promises";
 import { existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
-import { ChatAnthropic } from "@langchain/anthropic";
 import { MemorySaver } from "@langchain/langgraph";
 import { runPipeline } from "@/agents/orchestrator";
+import { initChatModel } from "langchain/chat_models/universal";
 import { UserProfileSchema, IdentitySchema, PreferencesSchema } from "@/core/schemas";
 import { buildTools } from "@/tools/index";
 import { logger, setLogLevel } from "@/utils/logger";
@@ -113,6 +113,10 @@ program
     false
   )
   .option(
+    "--model <name>",
+    "Chat model to use, e.g. 'openai:gpt-4o', 'anthropic:claude-opus-4-6'"
+  )
+  .option(
     "--verbose",
     "Show detailed tool-by-tool logging",
     false
@@ -136,6 +140,7 @@ interface RunOptions {
   dir?: string;
   prompt?: string;
   runId?: string;
+  model?: string;
   yes: boolean;
   dryRun: boolean;
   send: boolean;
@@ -263,19 +268,14 @@ async function runColdEmailPipeline(options: RunOptions) {
   clack.note(profileLines.join("\n"), "Defaults");
 
   // 3. Initialize model (needed for interpretation)
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    log.error("Missing ANTHROPIC_API_KEY environment variable");
-    throw new Error("ANTHROPIC_API_KEY environment variable not set");
-  }
+  const temperature = 0.7;
+  const modelName = options.model
+    || process.env.CHAT_MODEL
+    || `anthropic:${process.env.ANTHROPIC_MODEL || "claude-opus-4-6"}`;
+  log.info("Initializing model", { model: modelName, temperature });
 
-  const modelName = "claude-sonnet-4-20250514";
-  log.info("Initializing model", { model: modelName, temperature: 0.7 });
-  
-  const model = new ChatAnthropic({
-    model: modelName,
-    temperature: 0.7,
-    apiKey,
+  const model = await initChatModel(modelName, {
+    temperature,
   });
 
   // 4. Get prompt (from flag or interactive input)
@@ -298,6 +298,7 @@ async function runColdEmailPipeline(options: RunOptions) {
   // 5. Show config summary and get confirmation
   const summaryLines: string[] = [];
   summaryLines.push(`Run ID: ${runId}`);
+  summaryLines.push(`Model: ${modelName}`);
   summaryLines.push(`Roles: ${profile.defaultRoles.join(", ")}`);
   if (profile.defaultIndustries && profile.defaultIndustries.length > 0) {
     summaryLines.push(`Industries: ${profile.defaultIndustries.join(", ")}`);
