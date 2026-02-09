@@ -1,5 +1,5 @@
 /**
- * deepreach init -- interactive setup wizard
+ * deepreach -- interactive setup wizard (default command)
  *
  * Creates a `.deepreach/` workspace in the current directory with:
  *   - profile.json   (identity)

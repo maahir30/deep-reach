@@ -3,9 +3,9 @@
  * deepreach CLI
  *
  * Commands:
- *   init  - Interactive workspace setup
- *   run   - Run the cold-email recruiting pipeline
- *   send  - Send emails from an existing run's drafts
+ *   (default) - Interactive workspace setup (same as init)
+ *   run       - Run the cold-email recruiting pipeline
+ *   send      - Send emails from an existing run's drafts
  */
 
 import "dotenv/config";
@@ -44,8 +44,8 @@ program
 // ============================================================================
 
 program
-  .command("init")
-  .description("Interactive workspace setup (profile, resume, API keys)")
+  .command("init", { isDefault: true })
+  .description("Interactive workspace setup — runs by default when no command is given")
   .action(async () => {
     try {
       await runInit();
@@ -155,7 +155,7 @@ async function runColdEmailPipeline(options: RunOptions) {
 
   if (!root) {
     throw new Error(
-      "No deepreach workspace found.\nRun `npx deepreach init` to set one up, or use --dir to point to one."
+      "No deepreach workspace found.\nRun `npx deepreach` to set one up, or use --dir to point to one."
     );
   }
 
@@ -667,7 +667,7 @@ program
 
       if (!root) {
         clack.log.error(
-          "No deepreach workspace found.\nRun `npx deepreach init` to set one up, or use --dir to point to one."
+          "No deepreach workspace found.\nRun `npx deepreach` to set one up, or use --dir to point to one."
         );
         process.exit(1);
       }

@@ -50,7 +50,7 @@ export async function runEdit(target: string, opts: { dir?: string } = {}) {
   const root = opts.dir ?? findWorkspaceRoot();
   if (!root) {
     clack.log.error(
-      "No deepreach workspace found.\nRun `npx deepreach init` to set one up, or use --dir to point to one."
+      "No deepreach workspace found.\nRun `npx deepreach` to set one up, or use --dir to point to one."
     );
     process.exit(1);
   }
@@ -66,7 +66,7 @@ export async function runEdit(target: string, opts: { dir?: string } = {}) {
   const targetPath = entry.path(root);
 
   if (!existsSync(targetPath)) {
-    clack.log.error(`Not found: ${targetPath}\nRun \`npx deepreach init\` first.`);
+    clack.log.error(`Not found: ${targetPath}\nRun \`npx deepreach\` first.`);
     process.exit(1);
   }
 

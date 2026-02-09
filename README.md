@@ -17,18 +17,18 @@ Built on [LangGraph](https://github.com/langchain-ai/langgraphjs) with Claude, H
 ### 2. Initialize and run
 
 ```bash
-npx deepreach init          # one-time setup (profile, resume, API keys)
+npx deepreach               # one-time setup (profile, resume, API keys)
 npx deepreach run            # find companies, contacts, and draft emails
 npx deepreach send run0001   # review and send the drafts
 ```
 
-The `init` wizard walks you through your profile, target roles/industries, resume, and API keys. Everything is saved to a `.deepreach/` directory in your workspace.
+The setup wizard walks you through your profile, target roles/industries, resume, and API keys. Everything is saved to a `.deepreach/` directory in your workspace.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `deepreach init` | Interactive setup wizard |
+| `deepreach` | Interactive setup wizard (same as `deepreach init`) |
 | `deepreach run` | Find companies, discover contacts, draft emails |
 | `deepreach send <run-id>` | Send emails from a previous run |
 | `deepreach edit <target>` | Edit config (`profile`, `preferences`, `resume`, `env`) |
