@@ -3,9 +3,9 @@
  * Uses LangGraph DeepAgents for state management and execution
  */
 
-import { createDeepAgent, FilesystemBackend, createSubAgentMiddleware, createFilesystemMiddleware } from "deepagents";
+import { createDeepAgent, FilesystemBackend, createSubAgentMiddleware, createFilesystemMiddleware, type SubAgent } from "deepagents";
 import type { BaseLanguageModel } from "@langchain/core/language_models/base";
-import type { BaseCheckpointSaver } from "@langchain/langgraph";
+import { type BaseCheckpointSaver, Command } from "@langchain/langgraph";
 import type { StructuredTool } from "@langchain/core/tools";
 import type { AgentMiddleware } from "langchain";
 import type { UserProfile, CompanyReviewItem, StreamEvent, InterruptChunk } from "@/core/types";
@@ -131,7 +131,7 @@ export function createRecruitingOrchestrator(config: OrchestratorConfig) {
   // Create subagent configurations
   // Note: File system tools (read_file, write_file, etc.) are automatically
   // provided by DeepAgents' FilesystemMiddleware - don't need explicit tools
-  const subagents = SUBAGENT_DEFINITIONS.map(def => {
+  const subagents: SubAgent[] = SUBAGENT_DEFINITIONS.map(def => {
     const assignedTools = assignToolsToSubagent(def.name, tools);
     log.debug("Configuring subagent", { 
       name: def.name, 
@@ -346,9 +346,6 @@ export async function runPipeline(
     const s = !verbose ? clack.spinner() : null;
     if (s) s.start("Finding companies...");
     
-    // Import Command for HITL resume
-    const { Command } = await import("@langchain/langgraph");
-    
     // Simple verbose-only logging for tool calls (no progress tracking from stream)
     const logToolCall = (tc: { name: string; args?: Record<string, unknown> }) => {
       if (!verbose) return;
@@ -503,12 +500,12 @@ export async function runPipeline(
                 {
                   configurable: { thread_id: threadId },
                   recursionLimit: 200,
-                  streamMode: ["messages", "updates"] as const,
+                  streamMode: ["messages", "updates"],
                 }
               );
 
               for await (const resumeEvent of resumeStream) {
-                const rp = parseStreamEvent(resumeEvent as any[]);
+                const rp = parseStreamEvent(resumeEvent);
                 if (!rp) continue;
                 stepCount++;
 
@@ -551,7 +548,7 @@ export async function runPipeline(
       {
         configurable: { thread_id: threadId },
         recursionLimit: 200,
-        streamMode: ["messages", "updates"] as const,
+        streamMode: ["messages", "updates"],
       }
     );
 

@@ -2,7 +2,7 @@
 
 AI-powered cold outreach for job seekers. Find companies, discover contacts, and generate personalized emails — all from the command line.
 
-Built on [LangGraph](https://github.com/langchain-ai/langgraphjs) with Claude, Hunter.io, and Tavily.
+Built on [deepagents](https://github.com/langchain-ai/deepagentsjs) with Hunter.io and Tavily.
 
 ## Getting Started
 
@@ -10,9 +10,21 @@ Built on [LangGraph](https://github.com/langchain-ai/langgraphjs) with Claude, H
 
 | Key | What it does | Get it here |
 |-----|-------------|-------------|
-| `ANTHROPIC_API_KEY` | Powers the AI (Claude) | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+| LLM provider key (e.g. `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`) | Powers the AI agent | Your provider's dashboard (see below) |
 | `HUNTER_API_KEY` | Finds email addresses at companies | [hunter.io](https://hunter.io/api-keys) |
 | `TAVILY_API_KEY` | Web search for company/contact research | [app.tavily.com](https://app.tavily.com/home) |
+
+Any LLM provider supported by [LangChain](https://docs.langchain.com/oss/javascript/langchain/overview) works. Pass `--model provider:model-name` to the `run` command (e.g. `--model openai:gpt-4o`). Common providers:
+
+| Provider | Env variable | Dashboard |
+|----------|-------------|-----------|
+| Anthropic | `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+| OpenAI | `OPENAI_API_KEY` | [platform.openai.com](https://platform.openai.com/api-keys) |
+| Google Vertex AI | `GOOGLE_API_KEY` | [aistudio.google.com](https://aistudio.google.com/apikey) |
+| Groq | `GROQ_API_KEY` | [console.groq.com](https://console.groq.com/keys) |
+| Mistral | `MISTRAL_API_KEY` | [console.mistral.ai](https://console.mistral.ai/api-keys) |
+
+Defaults to Anthropic Claude if no `--model` flag or `CHAT_MODEL` env variable is set.
 
 ### 2. Initialize and run
 
@@ -76,8 +88,8 @@ my-outreach/
 
 ## Requirements
 
-- Node.js >= 18
-- API keys: Anthropic, Hunter.io, Tavily
+- Node.js >= 22
+- API keys: an LLM provider (Anthropic, OpenAI, etc.), Hunter.io, Tavily
 - Gmail App Password (only for sending)
 
 ## License
